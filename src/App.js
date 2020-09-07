@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 
-class App extends React.Component{
+class App extends React.PureComponent{
   constructor(props) {
     super(props);
     this.state = {n:1}
@@ -16,11 +16,7 @@ class App extends React.Component{
       })
     )
   }
-  shouldComponentUpdate(nextProps, nextState, nextContext) {
-    if(nextState.n === this.state.n)
-      return false;
-    else  return true;
-  }
+
 
   render(){
     return (
