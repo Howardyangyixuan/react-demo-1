@@ -7,11 +7,21 @@ class App extends React.Component{
     this.state = {n:1}
   }
   onClick = ()=>{
-    this.setState({
-      n:this.state.n+1
-      }
+    this.setState((state)=>({
+      n:state.n-1
+      })
+    )
+    this.setState((state)=>({
+        n:state.n+1
+      })
     )
   }
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    if(nextState.n === this.state.n)
+      return false;
+    else  return true;
+  }
+
   render(){
     return (
       <div className="App">
