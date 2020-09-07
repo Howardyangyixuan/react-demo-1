@@ -29,6 +29,30 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <div id="app"></div>
+    <script src="https://cdn.bootcss.com/react/16.10.2/umd/react.development.js"></script>
+    <script src="https://cdn.bootcss.com/react-dom/16.10.2/umd/react-dom.development.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/7.0.0-beta.3/babel.min.js"></script>
+    <script type="text/babel">
+      let n = 0;
+      const App = () => (
+        <div>
+          {n}
+          <button
+            onClick={() => {
+              n += 1;
+              render();
+            }}
+          >
+            +1
+          </button>
+        </div>
+      );
+      const render = () =>
+        ReactDOM.render(<App />, document.querySelector("#app"));
+      render();
+    </script>
+
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
