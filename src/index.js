@@ -24,7 +24,7 @@ const Component = () => {
 };
 ReactDOM.render(
   // <React.StrictMode>
-  [app(), Component()],
+  <App/>,
   // </React.StrictMode>,
   // <div>hi</div>,
   // <App/>
