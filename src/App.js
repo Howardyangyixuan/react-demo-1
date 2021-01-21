@@ -1,27 +1,38 @@
 import React, {useState} from "react"
 import ReactDOM from "react-dom"
 import "./App.css"
+
 const rootElement = document.getElementById("root")
 
-let mystate
-const myUseState = initValue =>{
-  mystate = mystate === undefined ? initValue : mystate;
-  const setState = newValue =>{
-    mystate = newValue
+let mystate = []
+let index = 0
+const myUseState = initValue => {
+  const myIndex = index;
+  if (mystate[myIndex] === undefined) {
+    mystate[myIndex] = initValue
+  }
+  const setState = newValue => {
+    mystate[myIndex] = newValue
     render()
   }
-  return [mystate,setState]
+  index += 1
+  return [mystate[myIndex], setState]
 }
-const render = ()=>{
-  ReactDOM.render(<App/>,rootElement);
+const render = () => {
+  index = 0;
+  ReactDOM.render(<App/>, rootElement)
 }
+
 function App() {
   console.log("running")
   const [n, setN] = myUseState(0)
+  const [m, setM] = myUseState(0)
+  console.log(mystate)
   return (
     <div className="App">
       <p>
-        {n}
+        n:{n}
+        m:{m}
       </p>
       <p>
         <button onClick={() => {
@@ -29,6 +40,14 @@ function App() {
         }}>
           +1
         </button>
+      </p>
+      <p>
+        <button onClick={() => {
+          setM(m + 1)
+        }}>
+          +1
+        </button>
+
       </p>
     </div>
   )
