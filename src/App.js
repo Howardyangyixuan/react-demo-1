@@ -1,47 +1,37 @@
-import React from "react";
-import "./App.css";
+import React, {useState} from "react"
+import ReactDOM from "react-dom"
+import "./App.css"
+const rootElement = document.getElementById("root")
 
-class App extends React.PureComponent{
-  constructor(props) {
-    super(props);
-    this.state = {n:1}
+let mystate
+const myUseState = initValue =>{
+  mystate = mystate === undefined ? initValue : mystate;
+  const setState = newValue =>{
+    mystate = newValue
+    render()
   }
-  onClick = ()=>{
-    this.setState((state)=>({
-      n:state.n-1
-      })
-    )
-    this.setState((state)=>({
-        n:state.n+1
-      })
-    )
-  }
-
-
-  render(){
-    return (
-      <div className="App">
-        App
-        <B name={this.state.n}/>
-        <button onClick={this.onClick}>+1</button>
-      </div>
+  return [mystate,setState]
+}
+const render = ()=>{
+  ReactDOM.render(<App/>,rootElement);
+}
+function App() {
+  console.log("running")
+  const [n, setN] = myUseState(0)
+  return (
+    <div className="App">
+      <p>
+        {n}
+      </p>
+      <p>
+        <button onClick={() => {
+          setN(n + 1)
+        }}>
+          +1
+        </button>
+      </p>
+    </div>
   )
-  }
-
-
 }
 
-class B extends React.Component{
-  componentWillReceiveProps(nextProps , nextContext) {
-    console.log('变化了')
-  }
-
-  render() {
-    return  (
-      <div>
-        {this.props.name}
-      </div>
-    )
-  }
-}
-export default App;
+export default App
