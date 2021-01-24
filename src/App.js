@@ -1,24 +1,24 @@
-import React, {useState} from "react"
+import React, {useState,useRef} from "react"
 import ReactDOM from "react-dom"
 import "./App.css"
 
 const rootElement = document.getElementById("root")
 
 function App() {
-  const [n, setN] = useState(0)
+  const nRef = useRef(0)
   const log = () => {
     setTimeout(() => {
-      console.log(`n:${n}`)
-    }, 3000)
+      console.log(`n:${nRef.current}`)
+    }, 1000)
   }
   return (
     <div className="App">
       <p>
-        n:{n}
+        n:{nRef.current},但这里不能实时更新
       </p>
       <p>
         <button onClick={() => {
-          setN(n + 1)
+          nRef.current+=1
         }}>
           +1
         </button>
