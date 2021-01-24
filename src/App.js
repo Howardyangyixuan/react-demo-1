@@ -6,9 +6,7 @@ const rootElement = document.getElementById("root")
 
 function App() {
   const nRef = useRef(0)
-  const render = () => {
-    ReactDOM.render(<App/>, rootElement)
-  }
+  const update = useState(null)[1]
   const log = () => {
     setTimeout(() => {
       console.log(`n:${nRef.current}`)
@@ -22,7 +20,7 @@ function App() {
       <p>
         <button onClick={() => {
           nRef.current += 1
-          render()
+          update(nRef.current+1)
         }}>
           +1
         </button>
