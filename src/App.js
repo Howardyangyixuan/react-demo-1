@@ -9,9 +9,17 @@ const themeContext = React.createContext(null)
 function App() {
   const [user, setUser] = React.useState(()=>({name: "howard", age: 9+9}))//注意返回对象要外面套一层括号，这是js的bug，函数的方式只执行一次
   const change = () => {
-    setUser({
-      ...user,
-      age:23,
+    setUser(n=>{
+      const m = {...n}
+      m.age+=1
+      console.log(m)
+      return m
+    })
+    setUser(n=>{
+      const m = {...n}
+      m.age+=1
+      console.log(m)
+      return m
     })
   }
   return (
