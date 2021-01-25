@@ -3,40 +3,30 @@ import ReactDOM from "react-dom"
 import "./App.css"
 
 const rootElement = document.getElementById("root")
-const themeContext = React.createContext(null);
+const themeContext = React.createContext(null)
 
 
 function App() {
-  const [theme,setTheme] = React.useState("red");
+  const [user, setUser] = React.useState({name: "howard", age: 18})
+  const change = () => {
+    setUser({
+      ...user,//需要自行合并
+      age: 23
+    })
+  }
   return (
-    <themeContext.Provider value={{theme,setTheme}}>
-      <div className={`App ${theme}`}>
-        <p>{theme}</p>
-        <div>
-          <ChildA/>
-        </div>
-        <div>
-          <ChildB/>
-        </div>
-      </div>
-    </themeContext.Provider>
-  )
-}
-function ChildA() {
-  const {setTheme} = React.useContext(themeContext)
-  return(
     <div>
-      <button onClick={()=>setTheme("red")}>red</button>
+      <p>user: </p>
+      <p>{user.name}</p>
+      <p>{user.age}</p>
+      <button onClick={() => {
+        change()
+      }}>
+        grow
+      </button>
     </div>
   )
 }
-function ChildB() {
-  const {setTheme} = React.useContext(themeContext)
-  return(
-    <div>
-      <button onClick={()=>setTheme("blue")}>blue</button>
-    </div>
-  )
-}
+
 
 export default App
