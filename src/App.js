@@ -7,28 +7,14 @@ const themeContext = React.createContext(null)
 
 
 function App() {
-  const [user, setUser] = React.useState(()=>({name: "howard", age: 9+9}))//注意返回对象要外面套一层括号，这是js的bug，函数的方式只执行一次
-  const change = () => {
-    setUser(n=>{
-      const m = {...n}
-      m.age+=1
-      console.log(m)
-      return m
-    })
-    setUser(n=>{
-      const m = {...n}
-      m.age+=1
-      console.log(m)
-      return m
-    })
-  }
+  const [user, setUser] = React.useState(0)//注意返回对象要外面套一层括号，这是js的bug，函数的方式只执行一次
   return (
     <div>
       <p>user: </p>
-      <p>{user.name}</p>
-      <p>{user.age}</p>
+      <p>{user}</p>
       <button onClick={() => {
-        change()
+        setUser(user+1)
+        setUser(user+1)
       }}>
         grow
       </button>
