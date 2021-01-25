@@ -13,8 +13,10 @@ function App() {
       <p>user: </p>
       <p>{user}</p>
       <button onClick={() => {
-        setUser(user+1)
-        setUser(user+1)
+        // setUser(user+1)
+        // setUser(user+1)
+        setUser(user=>user+1)
+        setUser(user=>user+1)
       }}>
         grow
       </button>
