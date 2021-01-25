@@ -9,9 +9,9 @@ const themeContext = React.createContext(null)
 function App() {
   const [user, setUser] = React.useState({name: "howard", age: 18})
   const change = () => {
+    user.name = 'yyx'
     setUser({
-      ...user,//需要自行合并
-      age: 23
+      ...user//需要产生新的地址
     })
   }
   return (
