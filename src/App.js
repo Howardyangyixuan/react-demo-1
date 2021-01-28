@@ -1,38 +1,37 @@
-import React, {createContext, useContext, useEffect, useReducer, useRef, useState} from "react"
+import React, {useEffect, useState} from "react"
 import "./App.css"
-
-const Context = createContext(null)
 
 function App() {
   const [n, setN] = useState(0)
+  useEffect(() => {
+    console.log("第一次渲染")
+  }, [])
+  useEffect(() => {
+    console.log(`第${n}次渲染`)
+  }, [n])
+  useEffect(() => {
+    console.log("每一次改变或渲染")
+  })
+
   return (
-    <Context.Provider value={{n, setN}}>
-      <div>
-        <Father/>
-      </div>
-    </Context.Provider>
+    <div>
+      n:{n}
+      <button onClick={() => setN(n + 1)}>+1</button>
+      {n % 2 ? <Child/> : null}
+    </div>
   )
 }
 
 function Child() {
-  const {n, setN} = useContext(Context)
+  useEffect(() => {
+    return () => console.log("子组件即将移出")
+  })
   return (
     <div>
-      Child:{n}
-      <button onClick={() => setN(n + 1)}>Child button</button>
+      child
     </div>
   )
-}
 
-function Father() {
-  const {n, setN} = useContext(Context)
-  return (
-    <div>
-      Father:{n}
-      <button onClick={() => setN(n + 1)}>Father button</button>
-      <Child/>
-    </div>
-  )
 }
 
 export default App
