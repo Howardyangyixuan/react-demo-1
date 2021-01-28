@@ -1,57 +1,38 @@
-import React, {createContext, useContext, useEffect, useReducer, useRef} from "react"
+import React, {createContext, useContext, useEffect, useReducer, useRef, useState} from "react"
 import "./App.css"
-import User from "./components/user"
-import Books from "./components/book"
-import Movies from "./components/movies"
-import Context from "./Context"
-import userOp from "./reducer/user"
-import booksOp from "./reducer/book"
-import moviesOp from "./reducer/movies"
 
-//1.集中数据到store
-const store = {
-  user: null,
-  books: null,
-  movies: null
-}
-
-//2.集中操作到reducer
-const operations = {
-  ...userOp,
-  ...booksOp,
-  ...moviesOp
-}
-const reducer = (state, action) => {
-  const fn = operations[action.type]
-  if (fn) {
-    return fn(state, action)
-  } else {
-    throw new Error("unknown action type")
-  }
-}
-
+const Context = createContext(null)
 
 function App() {
+  const [n, setN] = useState(0)
+  return (
+    <Context.Provider value={{n, setN}}>
+      <div>
+        <Father/>
+      </div>
+    </Context.Provider>
+  )
+}
 
-  //4.创建对数据读写API，只能运行在函数里面
-  const [state, dispatch] = useReducer(reducer, store)
-
-  //5.将上面的API放在Context里
+function Child() {
+  const {n, setN} = useContext(Context)
   return (
     <div>
-      {/*6.通过value将Reducer*/}
-      <Context.Provider value={{state, dispatch}}>
-        <div>
-          {/*7.在组件内使用读写API*/}
-          <User/>
-          <hr/>
-          <Books/>
-          <Movies/>
-        </div>
-      </Context.Provider>
+      Child:{n}
+      <button onClick={() => setN(n + 1)}>Child button</button>
     </div>
   )
 }
 
+function Father() {
+  const {n, setN} = useContext(Context)
+  return (
+    <div>
+      Father:{n}
+      <button onClick={() => setN(n + 1)}>Father button</button>
+      <Child/>
+    </div>
+  )
+}
 
 export default App
