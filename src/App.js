@@ -3,11 +3,12 @@ import "./App.css"
 
 function App() {
   const [n, setN] = useState(0)
+  const [m, setM] = useState(0)
   useEffect(() => {
     console.log("第一次渲染")
   }, [])
   useEffect(() => {
-    console.log(`第${n}次渲染`)
+    console.log(`n第${n}次渲染`)
   }, [n])
   useEffect(() => {
     console.log("每一次改变或渲染")
@@ -15,9 +16,11 @@ function App() {
 
   return (
     <div>
+      m:{m}
+      <button onClick={() => setM(m + 1)}>+1</button>
       n:{n}
       <button onClick={() => setN(n + 1)}>+1</button>
-      {n % 2 ? <Child/> : null}
+      {m % 2 ? <Child/> : null}
     </div>
   )
 }
