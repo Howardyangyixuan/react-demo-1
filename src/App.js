@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useReducer, useState} from "react"
 import "./App.css"
 
 function App() {
@@ -26,8 +26,19 @@ function App() {
 }
 
 function Child() {
+  let timer
   useEffect(() => {
-    return () => console.log("子组件即将移出")
+    timer = setInterval(
+      () => {
+        console.log("hi")
+      },1000
+    )
+  },[])
+  useEffect(() => {
+    return () => {
+      window.clearInterval(timer)
+      console.log("子组件即将移出,清除计时器")
+    }
   })
   return (
     <div>
