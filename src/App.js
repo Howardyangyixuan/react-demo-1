@@ -1,6 +1,9 @@
 import React, {createContext, useContext, useEffect, useReducer, useRef} from "react"
 import "./App.css"
-import ajax from "./ajax"
+import User from "./components/user"
+import Books from "./components/book"
+import Movies from "./components/movies"
+import Context from "./Context"
 
 //1.集中数据到store
 const store = {
@@ -22,9 +25,6 @@ const reducer = (state, action) => {
       throw new Error()
   }
 }
-
-//3.创建Context
-const Context = createContext(null)
 
 
 function App() {
@@ -49,51 +49,5 @@ function App() {
   )
 }
 
-function User() {
-  const {state, dispatch} = useContext(Context)
-  useEffect(() => {
-    ajax("/user").then(user => {
-      dispatch({type: "setUser", user})
-    })
-  }, [])
-  return (
-    <div>
-      <h1>个人信息</h1>
-      <div>name:{state.user ? state.user.name : "加载中"}</div>
-    </div>
-  )
-}
-
-function Books() {
-  const {state, dispatch} = useContext(Context)
-  ajax("/books").then(books => {
-    dispatch({type: "setBooks", books})
-  })
-  return (
-    <div>
-      <h1>我的书籍</h1>
-      <div>books:{state.books ? state.books.map((item) =>
-        <li key={item.id}>{item.name}</li>
-      ) : "加载中"
-      }</div>
-    </div>
-  )
-}
-
-function Movies() {
-  const {state, dispatch} = useContext(Context)
-  ajax("/movies").then(movies => {
-    dispatch({type: "setMovies", movies})
-  })
-  return (
-    <div>
-      <h1>我的电影</h1>
-      <div>movies:{state.movies ? state.movies.map((item) =>
-        <li key={item.id}>{item.name}</li>
-      ) : "加载中"
-      }</div>
-    </div>
-  )
-}
 
 export default App
