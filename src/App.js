@@ -4,6 +4,7 @@ import User from "./components/user"
 import Books from "./components/book"
 import Movies from "./components/movies"
 import Context from "./Context"
+import {findAllInRenderedTree} from "react-dom/test-utils"
 
 //1.集中数据到store
 const store = {
@@ -13,16 +14,23 @@ const store = {
 }
 
 //2.集中操作到reducer
+const operations = {
+  "setUser": (state, action) => {
+    return {...state, user: action.user}
+  },
+  "setBooks": (state, action) => {
+    return {...state, books: action.books}
+  },
+  "setMovies": (state, action) => {
+    return {...state, movies: action.movies}
+  },
+}
 const reducer = (state, action) => {
-  switch (action.type) {
-    case "setUser":
-      return {...state, user: action.user}
-    case "setBooks":
-      return {...state, books: action.books}
-    case "setMovies":
-      return {...state, movies: action.movies}
-    default:
-      throw new Error()
+  const fn = operations[action.type]
+  if (fn) {
+    return fn(state, action)
+  } else {
+    throw new Error("unknown action type")
   }
 }
 
