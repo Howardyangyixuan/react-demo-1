@@ -4,7 +4,9 @@ import User from "./components/user"
 import Books from "./components/book"
 import Movies from "./components/movies"
 import Context from "./Context"
-import {findAllInRenderedTree} from "react-dom/test-utils"
+import userOp from "./reducer/user"
+import booksOp from "./reducer/book"
+import moviesOp from "./reducer/movies"
 
 //1.集中数据到store
 const store = {
@@ -15,15 +17,9 @@ const store = {
 
 //2.集中操作到reducer
 const operations = {
-  "setUser": (state, action) => {
-    return {...state, user: action.user}
-  },
-  "setBooks": (state, action) => {
-    return {...state, books: action.books}
-  },
-  "setMovies": (state, action) => {
-    return {...state, movies: action.movies}
-  },
+  ...userOp,
+  ...booksOp,
+  ...moviesOp
 }
 const reducer = (state, action) => {
   const fn = operations[action.type]
