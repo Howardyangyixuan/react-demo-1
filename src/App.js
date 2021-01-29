@@ -1,4 +1,4 @@
-import React, {memo, useMemo, useState} from "react"
+import React, {memo, useCallback, useMemo, useState} from "react"
 import "./App.css"
 
 function App() {
@@ -6,17 +6,17 @@ function App() {
   const [m, setM] = useState(0)
   const [r, setR] = useState(0)
   const onClick = () => {
-    setN(n+1)
+    setN(n + 1)
   }
-  const onClickMemo = useMemo(() => {
-    return () => {
-      setN(n+1)
+  const onClickMemo = useCallback(
+    () => {
+      setN(n + 1)
     }
-  }, [n])
+    , [n])
   //如果deps里不写n那么效果将是静态的，即n始终为1
   const onClickMemoNoDeps = useMemo(() => {
     return () => {
-      setN(n+1)
+      setN(n + 1)
     }
   }, [])
 
