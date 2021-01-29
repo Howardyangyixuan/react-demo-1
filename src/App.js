@@ -1,51 +1,34 @@
-import React, {useEffect, useReducer, useState} from "react"
+import React, {useEffect, useLayoutEffect, useReducer, useRef, useState} from "react"
 import "./App.css"
 
 function App() {
   const [n, setN] = useState(0)
-  const [m, setM] = useState(0)
+  const time = useRef(null)
   useEffect(() => {
+    const layout = document.querySelector("#layout")
+    layout.innerText = "n :1000"
     console.log("第一次渲染")
-  }, [])
-  useEffect(() => {
-    console.log(`n第${n}次渲染`)
-  }, [n])
-  useEffect(() => {
-    console.log("每一次改变或渲染")
-  })
-
-  return (
-    <div>
-      m:{m}
-      <button onClick={() => setM(m + 1)}>+1</button>
-      n:{n}
-      <button onClick={() => setN(n + 1)}>+1</button>
-      {m % 2 ? <Child/> : null}
-    </div>
-  )
-}
-
-function Child() {
-  let timer
-  useEffect(() => {
-    timer = setInterval(
-      () => {
-        console.log("hi")
-      },1000
-    )
-  },[])
-  useEffect(() => {
-    return () => {
-      window.clearInterval(timer)
-      console.log("子组件即将移出,清除计时器")
+    if (time.current) {
+      console.log(`距离点击${performance.now() - time.current}ms`)
     }
-  })
+  }, [n])
+  useLayoutEffect(() => {
+    if (time.current) {
+      console.log(`Layout距离点击${performance.now() - time.current}ms`)
+    }
+  }, [n])
+
   return (
     <div>
-      child
+      <div id="layout">n:????????????</div>
+      <button onClick={() => {
+        setN(n + 1)
+        time.current = performance.now()
+      }}>+1
+      </button>
+      {console.log("hi")}
     </div>
   )
-
 }
 
 export default App
