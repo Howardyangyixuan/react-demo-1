@@ -1,4 +1,4 @@
-import React, {useEffect, useLayoutEffect, useReducer, useRef, useState} from "react"
+import React, {memo, useEffect, useLayoutEffect, useReducer, useRef, useState} from "react"
 import "./App.css"
 
 function App() {
@@ -19,10 +19,18 @@ function App() {
         setM(m + 1)
       }}>m+1
       </button>
+      <hr/>
+      memoChild:
+      <MemoChild data={m}/>
+      <button onClick={() => {
+        setM(m + 1)
+      }}>m+1
+      </button>
     </div>
   )
 }
 
+const MemoChild = memo(Child)
 function Child(props) {
   console.log("Child render")
   return (
