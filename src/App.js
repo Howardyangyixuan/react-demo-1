@@ -4,6 +4,10 @@ import "./App.css"
 function App() {
   const [n, setN] = useState(0)
   const [m, setM] = useState(0)
+  const fn = () => {
+    setN(n + 1)
+  }
+
 
   return (
     <div>
@@ -13,29 +17,22 @@ function App() {
       }}>n+1
       </button>
       <hr/>
-      Child:
-      <Child data={m}/>
-      <button onClick={() => {
-        setM(m + 1)
-      }}>m+1
-      </button>
-      <hr/>
       memoChild:
-      <MemoChild data={m}/>
-      <button onClick={() => {
-        setM(m + 1)
-      }}>m+1
-      </button>
+      <MemoChild data={m} onClick={fn}/>
     </div>
   )
 }
 
 const MemoChild = memo(Child)
+
 function Child(props) {
   console.log("Child render")
   return (
     <div>
       m:{props.data}
+      <button onClick={props.onClick}>
+        n+1
+      </button>
     </div>
   )
 }
