@@ -3,30 +3,31 @@ import "./App.css"
 
 function App() {
   const [n, setN] = useState(0)
-  const time = useRef(null)
-  useEffect(() => {
-    const layout = document.querySelector("#layout")
-    layout.innerText = "n :1000"
-    console.log("第一次渲染")
-    if (time.current) {
-      console.log(`距离点击${performance.now() - time.current}ms`)
-    }
-  }, [n])
-  useLayoutEffect(() => {
-    if (time.current) {
-      console.log(`Layout距离点击${performance.now() - time.current}ms`)
-    }
-  }, [n])
+  const [m, setM] = useState(0)
 
   return (
     <div>
-      <div id="layout">n:????????????</div>
+      <p>n:{n}</p>
       <button onClick={() => {
         setN(n + 1)
-        time.current = performance.now()
-      }}>+1
+      }}>n+1
       </button>
-      {console.log("hi")}
+      <hr/>
+      Child:
+      <Child data={m}/>
+      <button onClick={() => {
+        setM(m + 1)
+      }}>m+1
+      </button>
+    </div>
+  )
+}
+
+function Child(props) {
+  console.log("Child render")
+  return (
+    <div>
+      m:{props.data}
     </div>
   )
 }
