@@ -19,29 +19,34 @@ const MovableDiv = Movable((props) => <div {...props}/>)
 
 function Movable(Component) {
   function ComponentWithProps(props) {
-    //记录当前鼠标的位置，是button的左上角
+    //记录点击时，鼠标的位置，保证按钮不跳动
     const [pos, setPos] = useState([0, 0])
-    //记录点击时，鼠标的位置相对按钮左手角的位置，保证按钮不跳动
-    const [dist, setDist] = useState([0, 0])
-    //记录鼠标是否按下
-    const [press, setPress] = useState(false)
+    //用useRef在组件中共享变量，而不是重新生成，替代按下press和相对位置dist，同时由于current不自动更新，因此需要改变pos从而使其更新，所以变量的含义发生变化
+    //记录移动时鼠标的位置，根据当前位置 = 原位置+当前鼠标位置-上一时刻鼠标位置
+    const ref = useRef(null)
     const onMouseDown = (e) => {
       console.log("down")
-      setPress(true)
-      setDist([e.clientX - pos[0], e.clientY - pos[1]])
+      console.log(ref.current)
+      ref.current = [e.clientX, e.clientY]
     }
     const onMouseMove = (e) => {
-      if (press) {
-        setPos([e.clientX - dist[0], e.clientY - dist[1]])
+      if (ref.current) {
+        setPos ( [pos[0] + e.clientX - ref.current[0], pos[1] + e.clientY - ref.current[1]])
+        ref.current= [e.clientX,e.clientY]
       }
     }
     const onMouseUp = () => {
+      ref.current = null
       console.log("up")
-      setPress(false)
     }
+
     return (
       <Component onMouseMove={onMouseMove} onMouseDown={onMouseDown} onMouseUp={onMouseUp}
-                 style={{position: "fixed", left: pos[0], top: pos[1]}}>{props.text}</Component>
+                 style={{
+                   position: "fixed",
+                   left: pos && pos[0],
+                   top: pos && pos[1]
+                 }}>{props.text}</Component>
     )
   }
 
