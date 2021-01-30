@@ -1,9 +1,12 @@
-import React, {createRef, forwardRef, useRef, useState} from "react"
+import React, {createRef, forwardRef, useEffect, useImperativeHandle, useRef, useState} from "react"
 import "./App.css"
 
 function App() {
   const buttonRef = useRef(null)
   const divRef = useRef(null)
+  useEffect(()=>{
+    console.log(buttonRef.current)
+  })
   return (
     <div>
       <MovableButton ref={buttonRef} text="按住可以移动的按钮"/>
@@ -26,6 +29,9 @@ function Movable(Component) {
     //用useRef在组件中共享变量，而不是重新生成，替代按下press和相对位置dist，同时由于current不自动更新，因此需要改变pos从而使其更新，所以变量的含义发生变化
     //记录点击时，鼠标的位置，保证按钮不跳动
     const mousePos = useRef(null)
+    useImperativeHandle(ref,()=>{
+      return {x:(x)=>console.log(x)}
+    })
     const onMouseDown = (e) => {
       console.log("down")
       console.log(props, ref);
